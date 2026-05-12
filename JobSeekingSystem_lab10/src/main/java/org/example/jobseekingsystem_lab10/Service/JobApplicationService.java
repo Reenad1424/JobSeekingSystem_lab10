@@ -22,10 +22,10 @@ public class JobApplicationService {
 
     //add
     public void applyForJob(JobApplication app) {
-        if (userRepository.findUserById(app.getUserId()) == null)
+        if (userRepository.giveMeUserById(app.getUserId()) == null)
             throw new ApiException("User not found");
 
-        if (jobPostRepository.findJobPostById(app.getJobPostId()) == null)
+        if (jobPostRepository.giveMeJobPostById(app.getJobPostId()) == null)
             throw new ApiException("Job post not found");
 
         jobApplicationRepository.save(app);
@@ -33,7 +33,7 @@ public class JobApplicationService {
 
     //Delete
     public void withdrawJobApplication(Integer id) {
-        JobApplication app = jobApplicationRepository.findJobApplicationById(id);
+        JobApplication app = jobApplicationRepository.giveMeJobApplicationById(id);
         if (app == null)
             throw new ApiException("Job application not found");
 
@@ -41,11 +41,11 @@ public class JobApplicationService {
     }
 
     public void update(Integer id, JobApplication jobApplication) {
-        JobApplication old = jobApplicationRepository.findJobApplicationById(id);
+        JobApplication old = jobApplicationRepository.giveMeJobApplicationById(id);
         if (old == null) throw new ApiException("Application not found");
 
-        if (userRepository.findUserById(jobApplication.getUserId()) == null) throw new ApiException("User not found");
-        if (jobPostRepository.findJobPostById(jobApplication.getJobPostId()) == null) throw new ApiException("Job post not found");
+        if (userRepository.giveMeUserById(jobApplication.getUserId()) == null) throw new ApiException("User not found");
+        if (jobPostRepository.giveMeJobPostById(jobApplication.getJobPostId()) == null) throw new ApiException("Job post not found");
 
         old.setJobPostId(jobApplication.getJobPostId());
         old.setUserId(jobApplication.getUserId());
