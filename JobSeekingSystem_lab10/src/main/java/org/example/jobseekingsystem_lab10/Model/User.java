@@ -1,10 +1,7 @@
 package org.example.jobseekingsystem_lab10.Model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,22 +17,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty(message = "Name cannot be empty")
     @Size(min = 5, message = "Name length must be more than 4 characters")
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Name must contain only characters (no numbers)")
-    @Column(columnDefinition = "varchar(20) not null")
+    @Column(length = 20, nullable = false)
     private String name;
 
+    @NotEmpty(message = "Email cannot be empty")
     @Email(message = "Must be a valid email format")
-    @Column(columnDefinition = "varchar(50) not null unique")
+    @Column(length = 50, nullable = false, unique = true)
     private String email;
 
-    @Column(columnDefinition = "varchar(20) not null")
+    @NotEmpty(message = "Password cannot be empty")
+    @Column(length = 20, nullable = false)
     private String password;
 
+    @NotNull(message = "Age cannot be null")
     @Min(value = 22, message = "Age must be more than 21")
-    @Column(columnDefinition = "int not null")
+    @Column(nullable = false)
     private Integer age;
 
-    @Column(columnDefinition = "varchar(15) not null check(role='JOB_SEEKER' or role='EMPLOYER')")
-    private String role;
-}
+    @NotEmpty(message = "Role cannot be empty")
+    @Pattern(regexp = "^(JOB_SEEKER|EMPLOYER)$", message = "Role must be either 'JOB_SEEKER' or 'EMPLOYER' only")
+    @Column(length = 15, nullable = false)
+    private String role;}
+
