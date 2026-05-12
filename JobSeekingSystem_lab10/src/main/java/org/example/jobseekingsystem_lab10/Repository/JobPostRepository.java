@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JobPostRepository extends JpaRepository<JobPost,Integer> {
 
-    JobPost findJobPostById(Integer id);
-}
+
+    @Query("select p from JobApplication p where p.id=?1")
+    JobPost giveMeJobPostById(Integer id);
+}}
