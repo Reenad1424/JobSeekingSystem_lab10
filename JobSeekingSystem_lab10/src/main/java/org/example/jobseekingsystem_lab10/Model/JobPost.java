@@ -1,9 +1,7 @@
 package org.example.jobseekingsystem_lab10.Model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,21 +18,26 @@ public class JobPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Size(min =5 ,message = "The title must be mor than 4 letters")
-    @Column(columnDefinition = "varchar(15) not null")
+    @NotEmpty(message = "Title cannot be null")
+    @Size(min = 5, message = "The title must be more than 4 letters")
+    @Column(columnDefinition = "varchar(50) not null")
     private String title;
 
+    @NotEmpty(message = "Description cannot be null")
     @Column(columnDefinition = "text not null")
     private String description;
 
-    @Column(columnDefinition = "varchar(20) not null")
+    @NotEmpty(message = "Location cannot be null")
+    @Column(columnDefinition = "varchar(100) not null")
     private String location;
 
-    @PositiveOrZero(message = "The salary must be positive number")
+    @NotNull(message = "Salary cannot be null")
+    @PositiveOrZero(message = "The salary must be a non-negative number")
     @Column(columnDefinition = "int not null")
     private Integer salary;
 
-    @Column(columnDefinition = "date", updatable = false)// updatable = false: Prevents the field from being modified after the initial insertion to preserve the original posting date.
+    @Column(columnDefinition = "date", updatable = false)
     private LocalDate postingDate = LocalDate.now();
 
 }
+
