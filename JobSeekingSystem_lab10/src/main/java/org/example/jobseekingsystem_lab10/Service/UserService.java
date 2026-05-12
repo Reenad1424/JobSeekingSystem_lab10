@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public void update(Integer id , User user){
-        User oldUser =userRepository.findUserById(id);
+        User oldUser =userRepository.giveMeUserById(id);
 
         if(oldUser==null)
             throw new ApiException("user not found");
@@ -38,7 +38,7 @@ public class UserService {
     }
 
     public void delete(Integer id){
-        User deleteUser=userRepository.findUserById(id);
+        User deleteUser=userRepository.giveMeUserById(id);
 
         if(deleteUser==null)
             throw new ApiException("user not found");
